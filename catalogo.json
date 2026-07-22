@@ -1,0 +1,355 @@
+{
+  "atualizado_em": "2026-05-03",
+  "repo": "bonijoao/tidyprf-dados",
+  "release_tag": "dados-v1",
+  "base_url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/",
+  "datasets": {
+    "acidentes": {
+      "anos": [
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "arquivos": {
+        "acidentes_2007.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2007.parquet",
+          "tamanho_mb": 8.07,
+          "linhas": 269139,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2008.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2008.parquet",
+          "tamanho_mb": 8.87,
+          "linhas": 298891,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2009.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2009.parquet",
+          "tamanho_mb": 9.82,
+          "linhas": 337143,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2010.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2010.parquet",
+          "tamanho_mb": 11.36,
+          "linhas": 395411,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2011.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2011.parquet",
+          "tamanho_mb": 11.81,
+          "linhas": 412289,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2012.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2012.parquet",
+          "tamanho_mb": 11.37,
+          "linhas": 396916,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2013.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2013.parquet",
+          "tamanho_mb": 11.58,
+          "linhas": 405820,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2014.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2014.parquet",
+          "tamanho_mb": 10.67,
+          "linhas": 368506,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2015.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2015.parquet",
+          "tamanho_mb": 7.9,
+          "linhas": 269052,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2016.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2016.parquet",
+          "tamanho_mb": 6.1,
+          "linhas": 216261,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2017.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2017.parquet",
+          "tamanho_mb": 11.05,
+          "linhas": 342497,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2018.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2018.parquet",
+          "tamanho_mb": 9.02,
+          "linhas": 316638,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2019.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2019.parquet",
+          "tamanho_mb": 8.83,
+          "linhas": 324192,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2020.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2020.parquet",
+          "tamanho_mb": 9.01,
+          "linhas": 384640,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2021.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2021.parquet",
+          "tamanho_mb": 9.63,
+          "linhas": 436523,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2022.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2022.parquet",
+          "tamanho_mb": 10.13,
+          "linhas": 507204,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2023.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2023.parquet",
+          "tamanho_mb": 11.04,
+          "linhas": 571052,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2024.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2024.parquet",
+          "tamanho_mb": 11.47,
+          "linhas": 603215,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2025.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2025.parquet",
+          "tamanho_mb": 12,
+          "linhas": 584010,
+          "atualizado_em": "2026-05-03"
+        },
+        "acidentes_2026.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2026.parquet",
+          "tamanho_mb": 2.87,
+          "linhas": 147431,
+          "atualizado_em": "2026-05-03"
+        }
+      }
+    },
+    "datatran": {
+      "anos": [
+        2007,
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "arquivos": {
+        "datatran_2007.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2007.parquet",
+          "tamanho_mb": 2.49,
+          "linhas": 127675,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2008.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2008.parquet",
+          "tamanho_mb": 2.74,
+          "linhas": 141043,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2009.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2009.parquet",
+          "tamanho_mb": 3.03,
+          "linhas": 158646,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2010.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2010.parquet",
+          "tamanho_mb": 3.47,
+          "linhas": 183469,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2011.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2011.parquet",
+          "tamanho_mb": 3.64,
+          "linhas": 192326,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2012.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2012.parquet",
+          "tamanho_mb": 3.53,
+          "linhas": 184568,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2013.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2013.parquet",
+          "tamanho_mb": 3.54,
+          "linhas": 186748,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2014.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2014.parquet",
+          "tamanho_mb": 3.25,
+          "linhas": 169201,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2015.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2015.parquet",
+          "tamanho_mb": 2.42,
+          "linhas": 122161,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2016.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2016.parquet",
+          "tamanho_mb": 1.92,
+          "linhas": 96363,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2017.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2017.parquet",
+          "tamanho_mb": 3.66,
+          "linhas": 89567,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2018.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2018.parquet",
+          "tamanho_mb": 2.72,
+          "linhas": 69333,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2019.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2019.parquet",
+          "tamanho_mb": 2.45,
+          "linhas": 67558,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2020.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2020.parquet",
+          "tamanho_mb": 2.28,
+          "linhas": 63585,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2021.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2021.parquet",
+          "tamanho_mb": 2.34,
+          "linhas": 64567,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2022.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2022.parquet",
+          "tamanho_mb": 2.34,
+          "linhas": 64606,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2023.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2023.parquet",
+          "tamanho_mb": 2.47,
+          "linhas": 67766,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2024.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2024.parquet",
+          "tamanho_mb": 2.54,
+          "linhas": 73156,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2025.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2025.parquet",
+          "tamanho_mb": 3.14,
+          "linhas": 72529,
+          "atualizado_em": "2026-05-03"
+        },
+        "datatran_2026.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2026.parquet",
+          "tamanho_mb": 0.8,
+          "linhas": 17493,
+          "atualizado_em": "2026-05-03"
+        }
+      }
+    },
+    "infracoes": {
+      "anos": [
+        2019,
+        2020,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "arquivos": {
+        "infracoes_2019.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2019.parquet",
+          "tamanho_mb": 145.62,
+          "linhas": 5742110,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2020.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2020.parquet",
+          "tamanho_mb": 106.45,
+          "linhas": 4230583,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2022.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2022.parquet",
+          "tamanho_mb": 123.65,
+          "linhas": 4135523,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2023.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2023.parquet",
+          "tamanho_mb": 177.34,
+          "linhas": 5946483,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2024.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2024.parquet",
+          "tamanho_mb": 243.11,
+          "linhas": 8293839,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2025.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2025.parquet",
+          "tamanho_mb": 297.57,
+          "linhas": 10204474,
+          "atualizado_em": "2026-05-03"
+        },
+        "infracoes_2026.parquet": {
+          "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2026.parquet",
+          "tamanho_mb": 27.78,
+          "linhas": 974222,
+          "atualizado_em": "2026-05-03"
+        }
+      }
+    }
+  }
+}

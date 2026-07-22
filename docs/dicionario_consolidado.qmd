@@ -1,0 +1,438 @@
+---
+title: "Dicionário de Variáveis — PRF Dados Abertos"
+subtitle: "Datasets consolidados do pacote tidypfr"
+date: "2026-05-03"
+lang: pt
+format:
+  pdf:
+    toc: true
+    toc-depth: 3
+    toc-title: "Sumário"
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=25mm
+      - bottom=25mm
+      - left=20mm
+      - right=20mm
+    fontsize: 11pt
+    include-in-header:
+      text: |
+        \usepackage{booktabs}
+        \usepackage{longtable}
+        \usepackage{array}
+        \usepackage{multirow}
+        \usepackage{colortbl}
+        \definecolor{cinza}{RGB}{240,240,240}
+execute:
+  echo: false
+  warning: false
+---
+
+```{r setup}
+library(knitr)
+library(kableExtra)
+
+# Função auxiliar para tabelas do dicionário
+tabela_vars <- function(df, caption = NULL) {
+  kbl(
+    df,
+    booktabs = TRUE,
+    longtable = TRUE,
+    linesep = "",
+    caption = caption,
+    col.names = names(df)
+  ) |>
+    kable_styling(
+      latex_options = c("repeat_header", "striped"),
+      stripe_color = "cinza",
+      font_size = 9,
+      full_width = TRUE
+    ) |>
+    column_spec(1, monospace = TRUE, width = "3.5cm") |>
+    column_spec(2, width = "1.8cm") |>
+    column_spec(3, width = "3cm") |>
+    column_spec(4, width = "6cm")
+}
+```
+
+# Introdução
+
+Este dicionário documenta o schema unificado dos três datasets consolidados pelo pacote **tidypfr**, derivados dos dados abertos da Polícia Rodoviária Federal (PRF). Os arquivos Parquet resultantes cobrem o período 2007–2026 e são consumidos via download sob demanda pelas funções do pacote.
+
+## Convenções
+
+- **Tipo**: tipo R após leitura e conversão — `chr` (character), `int` (integer), `dbl` (double), `Date`.
+- **Cobertura**: indica os anos em que a coluna está disponível. Colunas ausentes em determinado período são armazenadas como `NA`.
+- **`NA` aplicados**: além dos `NA` nativos do R, os seguintes valores nos CSVs originais são convertidos para `NA` real: `""`, `"NA"`, `"Ignorado"`, `"Não informado"`, `"Não Informado"`, `"NÃO INFORMADO"`, `"-"`, `"N/A"`. Para a coluna `idade`, o valor `-1` também é convertido para `NA`.
+
+## Estrutura de arquivos gerados
+
+```
+dados/consolidados/
+├── acidentes/      acidentes_2007.parquet … acidentes_2026.parquet
+├── datatran/       datatran_2007.parquet  … datatran_2026.parquet
+├── infracoes/      infracoes_2019.parquet … infracoes_2026.parquet
+└── catalogo.json
+```
+
+---
+
+# Dataset: Acidentes por Pessoa (`acidentes`)
+
+**Função no pacote:** `acidentes_obter(year, ...)`
+**Granularidade:** Uma linha por **pessoa** envolvida em um acidente
+**Cobertura temporal:** 2007–2026
+**Fontes CSV:**
+
+- 2007–2015: `acidentes{ano}.csv` — separador vírgula, encoding Latin-1
+- 2016: `acidentes2016_atual.csv` — separador ponto e vírgula
+- 2017–2026: `acidentes{ano}_todas_causas_tipos.csv` — separador ponto e vírgula
+
+**Nota de schema:** Os dados até 2016 foram coletados pelo sistema BR-Brasil; a partir de 2017, pelo sistema BAT. As colunas presentes em apenas uma das eras são preenchidas com `NA` na era em que estão ausentes.
+
+```{r acidentes-schema}
+acidentes <- data.frame(
+  Coluna = c(
+    "id", "pesid", "data_inversa", "dia_semana", "horario",
+    "uf", "br", "km", "municipio",
+    "causa_principal", "causa_acidente", "ordem_tipo_acidente", "tipo_acidente",
+    "classificacao_acidente", "fase_dia", "sentido_via",
+    "condicao_metereologica", "tipo_pista", "tracado_via", "uso_solo",
+    "id_veiculo", "tipo_veiculo", "marca", "ano_fabricacao_veiculo",
+    "tipo_envolvido", "estado_fisico", "idade", "sexo",
+    "nacionalidade", "naturalidade",
+    "ilesos", "feridos_leves", "feridos_graves", "mortos",
+    "latitude", "longitude",
+    "regional", "delegacia", "uop",
+    "ano"
+  ),
+  Tipo = c(
+    "chr", "chr", "Date", "chr", "chr",
+    "chr", "int", "dbl", "chr",
+    "chr", "chr", "int", "chr",
+    "chr", "chr", "chr",
+    "chr", "chr", "chr", "chr",
+    "chr", "chr", "chr", "int",
+    "chr", "chr", "int", "chr",
+    "chr", "chr",
+    "int", "int", "int", "int",
+    "dbl", "dbl",
+    "chr", "chr", "chr",
+    "int"
+  ),
+  Cobertura = c(
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2017–2026", "2007–2026", "2017–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2016", "2007–2016",
+    "2017–2026", "2017–2026", "2017–2026", "2017–2026",
+    "2017–2026", "2017–2026",
+    "2017–2026", "2017–2026", "2017–2026",
+    "2007–2026"
+  ),
+  Descricao = c(
+    "Identificador único do acidente",
+    "Identificador único da pessoa envolvida",
+    "Data do acidente (todos os formatos originais normalizados para Date)",
+    "Dia da semana por extenso, minúsculas",
+    "Hora do acidente no formato HH:MM:SS",
+    "Sigla da UF, 2 letras maiúsculas",
+    "Número da rodovia federal (BR)",
+    "Quilômetro da rodovia; vírgula decimal convertida para ponto",
+    "Nome do município",
+    "Causa classificada como principal; NA em dados pré-2017 (coluna inexistente)",
+    "Causa do acidente (texto normalizado)",
+    "Ordem do tipo de acidente na ocorrência; NA pré-2017",
+    "Tipo de acidente (colisão, atropelamento, capotamento, etc.)",
+    "Classificação da gravidade: Sem Vítimas / Com Vítimas Feridas / Com Vítimas Fatais",
+    "Fase do dia: Pleno Dia, Amanhecer, Anoitecer, Plena Noite",
+    "Sentido do tráfego: Crescente, Decrescente",
+    "Condição meteorológica no momento do acidente",
+    "Tipo de pista: Dupla, Simples, Múltipla",
+    "Traçado da via: Reta, Curva, Interseção, etc.",
+    "Tipo de uso do solo. Normalizado: 'Sim'→'Urbano', 'Não'→'Rural' para 2017+",
+    "Identificador do veículo envolvido",
+    "Tipo do veículo: Automóvel, Caminhão, Motocicleta, etc.",
+    "Marca do veículo",
+    "Ano de fabricação do veículo",
+    "Tipo de envolvimento: Condutor, Passageiro, Pedestre, etc.",
+    "Estado físico da pessoa: Ileso, Ferido Leve, Ferido Grave, Morto, Ignorado",
+    "Idade da pessoa em anos. -1 convertido para NA",
+    "Sexo. Normalizado: 'M'→'Masculino', 'F'→'Feminino'",
+    "Nacionalidade da pessoa; presente apenas em 2007–2016 (BA pós-2016 não coleta)",
+    "Naturalidade da pessoa; presente apenas em 2007–2016",
+    "Binário 0/1: indica se esta pessoa ficou ilesa; NA pré-2017",
+    "Binário 0/1: indica se esta pessoa teve ferimento leve; NA pré-2017",
+    "Binário 0/1: indica se esta pessoa teve ferimento grave; NA pré-2017",
+    "Binário 0/1: indica se esta pessoa morreu; NA pré-2017",
+    "Latitude (SIRGAS 2000 / EPSG:4674); NA pré-2017",
+    "Longitude (SIRGAS 2000 / EPSG:4674); NA pré-2017",
+    "Código da regional PRF; NA pré-2017",
+    "Delegacia de referência; NA pré-2017",
+    "Unidade operacional; NA pré-2017",
+    "Ano derivado de year(data_inversa); sempre presente"
+  )
+)
+
+tabela_vars(
+  acidentes,
+  caption = "Schema unificado — Acidentes por pessoa (39 colunas)"
+)
+```
+
+**Nota sobre contagens:** As colunas `ilesos`, `feridos_leves`, `feridos_graves` e `mortos` em `acidentes` são **binárias** (0 ou 1) — indicam o estado físico da pessoa na linha. Para obter contagens por acidente, some sobre `id`. No dataset `datatran`, as mesmas colunas são **contagens** por ocorrência.
+
+---
+
+# Dataset: Acidentes por Ocorrência (`datatran`)
+
+**Função no pacote:** `datatran_obter(year, ...)`
+**Granularidade:** Uma linha por **ocorrência** (acidente como evento único)
+**Cobertura temporal:** 2007–2026
+**Fonte CSV:** `datatran{ano}.csv` — separador ponto e vírgula em todos os anos
+
+**Nota de schema:** Diferente de `acidentes`, este dataset agrega a ocorrência: campos de pessoa e veículo individuais são substituídos por contagens totais.
+
+```{r datatran-schema}
+datatran <- data.frame(
+  Coluna = c(
+    "id", "data_inversa", "dia_semana", "horario",
+    "uf", "br", "km", "municipio",
+    "causa_acidente", "tipo_acidente", "classificacao_acidente",
+    "fase_dia", "sentido_via", "condicao_metereologica",
+    "tipo_pista", "tracado_via", "uso_solo",
+    "pessoas", "mortos", "feridos_leves", "feridos_graves",
+    "ilesos", "ignorados", "feridos", "veiculos",
+    "latitude", "longitude",
+    "regional", "delegacia", "uop",
+    "ano"
+  ),
+  Tipo = c(
+    "chr", "Date", "chr", "chr",
+    "chr", "int", "dbl", "chr",
+    "chr", "chr", "chr",
+    "chr", "chr", "chr",
+    "chr", "chr", "chr",
+    "int", "int", "int", "int",
+    "int", "int", "int", "int",
+    "dbl", "dbl",
+    "chr", "chr", "chr",
+    "int"
+  ),
+  Cobertura = c(
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2007–2026", "2007–2026", "2007–2026", "2007–2026",
+    "2012–2026", "2012–2026",
+    "2012–2026", "2012–2026", "2012–2026",
+    "2007–2026"
+  ),
+  Descricao = c(
+    "Identificador único do acidente",
+    "Data do acidente (normalizada para Date)",
+    "Dia da semana por extenso, minúsculas",
+    "Hora do acidente no formato HH:MM:SS",
+    "Sigla da UF, 2 letras maiúsculas",
+    "Número da rodovia federal (BR)",
+    "Quilômetro da rodovia",
+    "Nome do município",
+    "Causa do acidente",
+    "Tipo de acidente",
+    "Gravidade: Sem Vítimas / Com Vítimas Feridas / Com Vítimas Fatais",
+    "Fase do dia",
+    "Sentido do tráfego: Crescente, Decrescente",
+    "Condição meteorológica",
+    "Tipo de pista",
+    "Traçado da via",
+    "Uso do solo. Normalizado: 'Sim'→'Urbano', 'Não'→'Rural' para 2017+",
+    "Total de pessoas envolvidas no acidente",
+    "Número de mortos na ocorrência (contagem, não binário)",
+    "Número de feridos leves (contagem)",
+    "Número de feridos graves (contagem)",
+    "Número de ilesos (contagem)",
+    "Pessoas com estado físico ignorado (contagem)",
+    "Total de feridos (leves + graves)",
+    "Total de veículos envolvidos",
+    "Latitude (SIRGAS 2000); NA para 2007–2011",
+    "Longitude (SIRGAS 2000); NA para 2007–2011",
+    "Código da regional PRF; NA para 2007–2011",
+    "Delegacia de referência; NA para 2007–2011",
+    "Unidade operacional; NA para 2007–2011",
+    "Ano derivado de year(data_inversa)"
+  )
+)
+
+tabela_vars(
+  datatran,
+  caption = "Schema unificado — Acidentes por ocorrência/datatran (31 colunas)"
+)
+```
+
+---
+
+# Dataset: Infrações (`infracoes`)
+
+**Função no pacote:** `infracoes_obter(year, ...)`
+**Granularidade:** Uma linha por **infração de trânsito** registrada
+**Cobertura temporal:** 2019–2026 (2021 ausente nos dados disponíveis)
+**Fontes CSV:**
+
+- 2019–2020: `infracoes_{ano}_{MM}.csv` — separador `;`, BOM UTF-8, 22 colunas
+- 2022–2026: `ajustados_{ano}/infraçoes{ano}_{MM}.csv` — separador `;`, 25 colunas
+
+Todos os meses são concatenados antes de escrever o Parquet anual. As 3 colunas extras de 2022+ (`tipo_veiculo`, `nom_modelo_veiculo`, `qtd_infracoes`) são `NA` para 2019–2020.
+
+```{r infracoes-schema}
+infracoes <- data.frame(
+  Coluna = c(
+    "numero_auto", "dat_infracao", "tip_abordagem", "ind_assinou_auto",
+    "ind_veiculo_estrangeiro", "ind_sentido_trafego",
+    "uf_placa", "uf_infracao", "num_br_infracao", "num_km_infracao", "nom_municipio",
+    "cod_infracao", "descricao_abreviada", "enquadramento",
+    "data_inicio_vigencia", "data_fim_vigencia",
+    "med_realizada", "med_considerada", "exc_verificado",
+    "especie", "nome_veiculo_marca",
+    "tipo_veiculo", "nom_modelo_veiculo",
+    "hora", "qtd_infracoes",
+    "ano"
+  ),
+  Tipo = c(
+    "chr", "Date", "chr", "chr",
+    "chr", "chr",
+    "chr", "chr", "int", "dbl", "chr",
+    "chr", "chr", "chr",
+    "Date", "Date",
+    "dbl", "dbl", "dbl",
+    "chr", "chr",
+    "chr", "chr",
+    "chr", "int",
+    "int"
+  ),
+  Cobertura = c(
+    "2019–2026", "2019–2026", "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026", "2019–2026", "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026", "2019–2026",
+    "2019–2026", "2019–2026",
+    "2022–2026", "2022–2026",
+    "2019–2026", "2022–2026",
+    "2019–2026"
+  ),
+  Descricao = c(
+    "Número do auto de infração",
+    "Data da infração (parse_data_prf, formato original dd/mm/aaaa)",
+    "Tipo de abordagem: Ostensiva, Eletrônica",
+    "Condutor assinou o auto? S/N",
+    "Veículo estrangeiro? S/N",
+    "Sentido do tráfego no momento da infração",
+    "UF da placa do veículo infrator",
+    "UF onde ocorreu a infração",
+    "Número da BR onde ocorreu a infração",
+    "Quilômetro da BR",
+    "Município da infração",
+    "Código do artigo do CTB infringido",
+    "Descrição abreviada da infração",
+    "Enquadramento legal da infração",
+    "Data de início de vigência do artigo (parse_data_prf)",
+    "Data de fim de vigência do artigo (parse_data_prf)",
+    "Medição realizada (ex.: velocidade medida em km/h)",
+    "Medição considerada para cálculo da penalidade",
+    "Excesso verificado (medição considerada − limite legal)",
+    "Espécie do veículo (automóvel, moto, caminhão, etc.)",
+    "Marca do veículo",
+    "Tipo do veículo; NA para 2019–2020 (coluna inexistente)",
+    "Modelo do veículo; NA para 2019–2020",
+    "Hora da infração no formato HH:MM:SS",
+    "Quantidade de infrações do auto; NA para 2019–2020",
+    "Ano derivado de year(dat_infracao)"
+  )
+)
+
+tabela_vars(
+  infracoes,
+  caption = "Schema unificado — Infrações (26 colunas)"
+)
+```
+
+---
+
+# Padronização aplicada em todos os datasets
+
+## Conversão de NA
+
+Os seguintes valores nos CSVs originais são convertidos para `NA` real do R antes de escrever o Parquet:
+
+| Valor no CSV | Contexto |
+|---|---|
+| `""` (vazio) | Qualquer coluna |
+| `"NA"` | Qualquer coluna |
+| `"Ignorado"` | Estado físico, condição meteorológica, etc. |
+| `"Não informado"` / `"Não Informado"` / `"NÃO INFORMADO"` | Campos de texto |
+| `"-"` | Campos numéricos e texto |
+| `"N/A"` | Qualquer coluna |
+| `-1` (numérico) | Coluna `idade` (sentinela de dado ausente) |
+
+## Normalização de `uso_solo`
+
+A partir de 2017, o sistema BAT registra `uso_solo` como `"Sim"` (urbano) e `"Não"` (rural). O consolidador normaliza para o vocabulário histórico:
+
+| Valor original (2017+) | Valor normalizado |
+|---|---|
+| `"Sim"` | `"Urbano"` |
+| `"Não"` | `"Rural"` |
+
+## Normalização de `sexo` (acidentes)
+
+| Valor original | Valor normalizado |
+|---|---|
+| `"M"` | `"Masculino"` |
+| `"F"` | `"Feminino"` |
+
+## Parsing de datas
+
+Função `parse_data_prf()` aplicada a todas as colunas de data:
+
+```r
+parse_data_prf <- function(x) {
+  lubridate::parse_date_time(
+    x,
+    orders = c("Ymd", "dmY", "dmy"),
+    quiet  = TRUE
+  ) |> as.Date()
+}
+```
+
+| Formato original | Exemplo | Presente em |
+|---|---|---|
+| `YYYY-MM-DD` | `2023-03-15` | Acidentes 2017+, Datatran 2012–2013, 2015, 2017+ |
+| `DD/MM/YYYY` | `15/03/2023` | Acidentes 2007–2015, Datatran 2007–2011, 2014, Infrações |
+| `DD/MM/YY` | `15/03/16` | Acidentes 2016, Datatran 2016 |
+
+## Compressão e formato Parquet
+
+- **Codec:** Snappy — equilíbrio entre tamanho e velocidade de leitura
+- **Compatível com:** `{arrow}` e `{duckdb}` no R
+- **Tamanho esperado:** ~2–8 MB por arquivo anual dependendo do dataset e ano
+
+---
+
+# Fontes e referências
+
+| Dicionário original | Aplica a |
+|---|---|
+| `Dicionário de Variáveis_pessoa_2017_todas_causas_tipos.pdf` | Acidentes 2017+ |
+| `acidentes agrupados por pessoa (até 2016).pdf` | Acidentes 2007–2016 |
+| `Dicionário de Variáveis_ocorrencia_2017.pdf` | Datatran 2017+ |
+| `acidentes agrupados por ocorrência (até 2016).pdf` | Datatran 2007–2016 |
+| `dicionario-de-variaveis-infracoes.pdf` | Infrações 2019+ |

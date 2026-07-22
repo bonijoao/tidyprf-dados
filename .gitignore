@@ -1,0 +1,13 @@
+# Dados (18+ GB) — Parquet publicados via GitHub Releases
+dados/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# OS
+.DS_Store
+Thumbs.db
