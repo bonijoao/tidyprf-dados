@@ -1,0 +1,304 @@
+{
+  "fontes": [
+    {
+      "dataset": "acidentes",
+      "ano": 2017,
+      "drive_id": "1Kv5mNgZvxtl0xwqsmDrxcaLY2KELxR-3",
+      "referencia": "Documento CSV de Acidentes 2017 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2018,
+      "drive_id": "1J-012nSnIafOASNFvIYY_vDKKpM51w5_",
+      "referencia": "Documento CSV de Acidentes 2018 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2019,
+      "drive_id": "1DAJYKVfkTcPhQodSmHp9rsG1Q8XJW-m3",
+      "referencia": "Documento CSV de Acidentes 2019 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2020,
+      "drive_id": "1yQtVOsAlupPHQVVTmbJo0NR3XMzgHANO",
+      "referencia": "Documento CSV de Acidentes 2020 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2021,
+      "drive_id": "1Gk3U6cMOZIevsDZHLi6J503xoCRS_lnI",
+      "referencia": "Documento CSV de Acidentes 2021 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2022,
+      "drive_id": "1wskEgRC3ame7rncSDQ7qWhKsoKw1lohY",
+      "referencia": "Documento CSV de Acidentes 2022 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2023,
+      "drive_id": "1-caam_dahYOf2eorq4mez04Om6DD5d_3",
+      "referencia": "Documento CSV de Acidentes 2023 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2024,
+      "drive_id": "14qBOhrE1gioVtuXgxkCJ9kCA8YtUGXKA",
+      "referencia": "Documento CSV de Acidentes 2024 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2025,
+      "drive_id": "1-PJGRbfSe7PVjU37A3wTCls_NRXyVGRD",
+      "referencia": "Documento CSV de Acidentes 2025 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "acidentes",
+      "ano": 2026,
+      "drive_id": "1EsGox0UnBWSaM6mrkNSUlYUOecubLCsh",
+      "referencia": "Documento CSV de Acidentes 2026 (Agrupados por pessoa - Todas as causas e tipos de acidentes)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2007,
+      "drive_id": "1EFpZF5F6cB0DOHd2Uxnj7X948WE69a8e",
+      "referencia": "Documento CSV de Acidentes 2007 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2008,
+      "drive_id": "1_OSeHlyKJw8cIhMS_JzSg1RlYX8k6vSG",
+      "referencia": "Documento CSV de Acidentes 2008 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2009,
+      "drive_id": "1qkVatg0pC_zosuBs0NCSgEXDJvBbnTYC",
+      "referencia": "Documento CSV de Acidentes 2009 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2010,
+      "drive_id": "1_yU6FRh8M7USjiChQwyF20NtY48GTmEX",
+      "referencia": "Documento CSV de Acidentes 2010 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2011,
+      "drive_id": "1HHhgLF-kSR6Gde2qOaTXL3T5ieD33hpG",
+      "referencia": "Documento CSV de Acidentes 2011 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2012,
+      "drive_id": "18Yz2prqKSLthrMmW-73vrOiDmKTCL6xE",
+      "referencia": "Documento CSV de Acidentes 2012 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2013,
+      "drive_id": "1p_7lw9RzkINfscYAZSmc-Z9Ci4ZPJyEr",
+      "referencia": "Documento CSV de Acidentes 2013 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2014,
+      "drive_id": "1FpF5wTBsRDkEhLm3z2g8XDiXr9SO9Uk8",
+      "referencia": "Documento CSV de Acidentes 2014 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2015,
+      "drive_id": "1DyqR5FFcwGsamSag-fGm13feQt0Y-3Da",
+      "referencia": "Documento CSV de Acidentes 2015 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2016,
+      "drive_id": "16qooQl_ySoW61CrtsBbreBVNPYlEkoYm",
+      "referencia": "Documento CSV de Acidentes 2016 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2017,
+      "drive_id": "1HPLWt5f_l4RIX3tKjI4tUXyZOev52W0N",
+      "referencia": "Documento CSV de Acidentes 2017 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2018,
+      "drive_id": "1cM4IgGMIiR-u4gBIH5IEe3DcvBvUzedi",
+      "referencia": "Documento CSV de Acidentes 2018 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2019,
+      "drive_id": "1pN3fn2wY34GH6cY-gKfbxRJJBFE0lb_l",
+      "referencia": "Documento CSV de Acidentes 2019 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2020,
+      "drive_id": "1esu6IiH5TVTxFoedv6DBGDd01Gvi8785",
+      "referencia": "Documento CSV de Acidentes 2020 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2021,
+      "drive_id": "12xH8LX9aN2gObR766YN3cMcuycwyCJDz",
+      "referencia": "Documento CSV de Acidentes 2021 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2022,
+      "drive_id": "1PRQjuV5gOn_nn6UNvaJyVURDIfbSAK4-",
+      "referencia": "Documento CSV de Acidentes 2022 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2023,
+      "drive_id": "1-WO3SfNrwwZ5_l7fRTiwBKRw7mi1-HUq",
+      "referencia": "Documento CSV de Acidentes 2023 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2024,
+      "drive_id": "14lB0vqMFkaZj8HZ44b0njYgxs9nAN8KO",
+      "referencia": "Documento CSV de Acidentes 2024 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2025,
+      "drive_id": "1-G3MdmHBt6CprDwcW99xxC4BZ2DU5ryR",
+      "referencia": "Documento CSV de Acidentes 2025 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "datatran",
+      "ano": 2026,
+      "drive_id": "1A3IirNm0AzRaSosA1IS94DOVmvKsn0Ol",
+      "referencia": "Documento CSV de Acidentes 2026 (Agrupados por ocorrência)"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2007,
+      "drive_id": "1OIeexP-0cJpJQfAG6cWjPddXW0z4SXTU",
+      "referencia": "Documento CSV de multas 2007"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2008,
+      "drive_id": "1EK7WwXqcdauwIM2n8Aurat4E4yO1SVyv",
+      "referencia": "Documento CSV de multas 2008"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2009,
+      "drive_id": "1MODOWfGFIyFdDLWRFWVdjPYX6M5ZGgcO",
+      "referencia": "Documento CSV de multas 2009"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2010,
+      "drive_id": "1I8s6x8jHDJZZ0QqIv49DT49GhR90kklW",
+      "referencia": "Documento CSV de multas 2010"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2011,
+      "drive_id": "18cXQ3TNm4QMBCfLpFOI-ddShTPD6LRWq",
+      "referencia": "Documento CSV de multas 2011"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2012,
+      "drive_id": "1k-yqSlq80JNmpGR7-tmRsuVYwxyy6JTD",
+      "referencia": "Documento CSV de multas 2012"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2013,
+      "drive_id": "1GKNSZ2-7D-aqZM1bn5qUk6YKAQLjd-24",
+      "referencia": "Documento CSV de multas 2013"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2014,
+      "drive_id": "1133HkHiaS9R-xs2ZU1y2yP8ffWClG9nS",
+      "referencia": "Documento CSV de multas 2014"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2015,
+      "drive_id": "1WNiU50NvZVKkEbpE-xIM_NlNFiHpQKtB",
+      "referencia": "Documento CSV de multas 2015"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2016,
+      "drive_id": "1-MG0CS-1hNe_TtPKiT7xFgbt0yPNTjgA",
+      "referencia": "Documento CSV de multas 2016"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2017,
+      "drive_id": "1ZvDMNXox-R5xYvKKeT4wwCMro5Lz09VO",
+      "referencia": "Documento CSV de multas 2017"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2018,
+      "drive_id": "1eeGZv7CUzSYS1KTq4If0QLOmaoQ8J3zB",
+      "referencia": "Documento CSV de multas 2018"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2019,
+      "drive_id": "1R5LiAULtB22HP0EkG8GSwzTTSAvbp35L",
+      "referencia": "Documento CSV de multas 2019"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2020,
+      "drive_id": "1e9DfwTd4DlQ57Wl0zGx3pvBBTuq07sUW",
+      "referencia": "Documento CSV de multas 2020"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2021,
+      "drive_id": "1kgHHk0lurTuu4ZEn4Vhfo5W0ejOvDnZJ",
+      "referencia": "Documento CSV de multas 2021"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2022,
+      "drive_id": "1-oY2e1W4cjmbZCgdcGnmPCIod4MFCSpg",
+      "referencia": "Documento CSV de multas 2022"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2023,
+      "drive_id": "106pwbYv84gCtLhhcbi0B_4qyUQxfH2n3",
+      "referencia": "Documento CSV de multas 2023"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2024,
+      "drive_id": "156WEl9V3AiAbkcE1AJij6Sslqu_qLQs7",
+      "referencia": "Documento CSV de multas 2024"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2025,
+      "drive_id": "10nxiQR5tZcNp3Pg7f69ysv0dc87UGDHc",
+      "referencia": "Documento CSV de multas 2025"
+    },
+    {
+      "dataset": "infracoes",
+      "ano": 2026,
+      "drive_id": "1tGlevmqNhFZflvP02-ZDika6mVcH5dmG",
+      "referencia": "Documento CSV de multas 2026"
+    }
+  ]
+}
