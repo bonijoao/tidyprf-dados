@@ -94,7 +94,7 @@ jobs:
             echo "Catalogo sem mudancas."
             exit 0
           fi
-          arquivos=$(xargs -a alterados.txt -n1 basename | sed 's/\.parquet$//' | paste -sd ', ')
+          arquivos=$(xargs -a alterados.txt -n1 basename | sed 's/\.parquet$//' | paste -sd ',' | sed 's/,/, /g')
           msg="Atualiza dados PRF${arquivos:+: $arquivos}"
           git -c user.name=bonijoao -c user.email=jpab.27@hotmail.com commit -m "$msg"
           git pull --rebase origin main
