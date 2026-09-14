@@ -1,3 +1,4 @@
+# Carga inicial (historico). Atualizacoes usam scripts/05_atualizar.R.
 # install.packages(c("rvest", "stringr", "purrr", "googledrive"))
 library(rvest)
 library(stringr)

@@ -1,3 +1,4 @@
+# Carga inicial (historico). Atualizacoes usam scripts/05_atualizar.R.
 library(stringr)
 library(purrr)
 library(tools)

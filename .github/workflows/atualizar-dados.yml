@@ -1,0 +1,117 @@
+name: Atualizar dados PRF
+
+on:
+  schedule:
+    # Segunda-feira, 06:00 UTC (03:00 em Brasilia)
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      anos:
+        description: "Anos a verificar, separados por virgula (vazio = ano atual e anterior)"
+        required: false
+        default: ""
+      forcar:
+        description: "Reprocessar mesmo sem mudanca na origem"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Nao publicar (sem upload na release e sem commit)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TIDYPRF_ANOS: ${{ inputs.anos }}
+      TIDYPRF_FORCAR: ${{ inputs.forcar && '1' || '' }}
+      DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Liberar espaco em disco
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::arrow
+            any::readr
+            any::dplyr
+            any::purrr
+            any::stringr
+            any::lubridate
+            any::jsonlite
+            any::fs
+            any::cli
+            any::glue
+            any::rvest
+            any::httr2
+            any::digest
+
+      - name: Baixar, consolidar e validar
+        run: Rscript scripts/05_atualizar.R
+
+      - name: Resumo
+        run: |
+          df -h /
+          if [ -s alterados.txt ]; then
+            echo "Arquivos atualizados:" | tee -a "$GITHUB_STEP_SUMMARY"
+            sed 's/^/- /' alterados.txt | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Nenhum dado novo." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Publicar Parquets na release
+        if: env.DRY_RUN != '1'
+        run: |
+          if [ -s alterados.txt ]; then
+            xargs -a alterados.txt gh release upload dados-v1 --clobber
+          fi
+
+      - name: Commit do catalogo
+        if: env.DRY_RUN != '1'
+        run: |
+          git add catalogo.json fontes.json
+          if git diff --cached --quiet; then
+            echo "Catalogo sem mudancas."
+            exit 0
+          fi
+          arquivos=$(xargs -a alterados.txt -n1 basename | sed 's/\.parquet$//' | paste -sd ', ')
+          msg="Atualiza dados PRF${arquivos:+: $arquivos}"
+          git -c user.name=bonijoao -c user.email=jpab.27@hotmail.com commit -m "$msg"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Abrir issue em caso de falha
+        if: failure() && env.DRY_RUN != '1'
+        run: |
+          gh label create atualizacao-falhou --color B60205 \
+            --description "Falha na atualizacao automatica dos dados" --force
+          abertas=$(gh issue list --label atualizacao-falhou --state open --json number --jq length)
+          url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ "$abertas" -eq 0 ]; then
+            gh issue create --label atualizacao-falhou \
+              --title "Falha na atualizacao automatica dos dados PRF" \
+              --body "A execucao $url falhou. Nada foi publicado. Veja o log para detalhes."
+          else
+            numero=$(gh issue list --label atualizacao-falhou --state open --json number --jq '.[0].number')
+            gh issue comment "$numero" --body "Nova falha: $url"
+          fi

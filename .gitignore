@@ -1,6 +1,9 @@
 # Dados (18+ GB) — Parquet publicados via GitHub Releases
 dados/
 
+# Saida temporaria do scripts/05_atualizar.R
+alterados.txt
+
 # R
 .Rproj.user/
 .Rhistory

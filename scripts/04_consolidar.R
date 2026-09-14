@@ -16,11 +16,7 @@ suppressPackageStartupMessages({
   library(glue)
 })
 
-if (!dir_exists("dados/processados")) {
-  cli_abort("Execute a partir do root do repositorio tidyprf-dados.")
-}
-
-REPO        <- "bonijoao/tidyprf-dados"
+REPO       <- "bonijoao/tidyprf-dados"
 RELEASE_TAG <- "dados-v1"
 BASE_URL    <- paste0("https://github.com/", REPO,
                       "/releases/download/", RELEASE_TAG, "/")
@@ -276,93 +272,136 @@ consolidar_infracoes <- function(ano) {
     return(invisible(NULL))
   }
 
-  df <- map_dfr(arquivos, function(arq) {
-    read_delim(arq, delim = ";",
-               locale = locale(encoding = enc_csv, decimal_mark = ","),
-               na = VALORES_NA, name_repair = "minimal",
-               col_types = cols(.default = "c"),
-               show_col_types = FALSE) |>
+  # Um CSV (mes) por vez, cada um vira um row group do mesmo Parquet:
+  # memoria limitada a ~1 mes em vez do ano inteiro (~2,5 GB de CSV)
+  ler_mes <- function(arq) {
+    df <- read_delim(arq, delim = ";",
+                     locale = locale(encoding = enc_csv, decimal_mark = ","),
+                     na = VALORES_NA, name_repair = "minimal",
+                     col_types = cols(.default = "c"),
+                     show_col_types = FALSE) |>
       rename_with(tolower) |>
       rename(any_of(MAPA_INFRACOES))
-  })
 
-  if (ano == 2019) {
-    df <- df |>
-      mutate(tipo_veiculo       = NA_character_,
-             nom_modelo_veiculo = NA_character_,
-             qtd_infracoes      = NA_integer_)
-  } else if (ano == 2020) {
-    df <- df |>
-      mutate(tipo_veiculo       = NA_character_,
-             nom_modelo_veiculo = NA_character_)
+    if (ano == 2019) {
+      df <- df |>
+        mutate(tipo_veiculo       = NA_character_,
+               nom_modelo_veiculo = NA_character_,
+               qtd_infracoes      = NA_integer_)
+    } else if (ano == 2020) {
+      df <- df |>
+        mutate(tipo_veiculo       = NA_character_,
+               nom_modelo_veiculo = NA_character_)
+    }
+
+    df |>
+      mutate(
+        dat_infracao         = parse_data_prf(dat_infracao),
+        data_inicio_vigencia = parse_data_prf(data_inicio_vigencia),
+        data_fim_vigencia    = parse_data_prf(data_fim_vigencia),
+        ano                  = as.integer(year(dat_infracao))
+      ) |>
+      select(all_of(SCHEMA_INFRACOES)) |>
+      mutate(
+        num_br_infracao = as.integer(num_br_infracao),
+        num_km_infracao = as.double(num_km_infracao),
+        med_realizada   = as.double(med_realizada),
+        med_considerada = as.double(med_considerada),
+        exc_verificado  = as.double(exc_verificado),
+        qtd_infracoes   = as.integer(qtd_infracoes)
+      )
   }
-
-  df <- df |>
-    mutate(
-      dat_infracao         = parse_data_prf(dat_infracao),
-      data_inicio_vigencia = parse_data_prf(data_inicio_vigencia),
-      data_fim_vigencia    = parse_data_prf(data_fim_vigencia),
-      ano                  = as.integer(year(dat_infracao))
-    ) |>
-    select(all_of(SCHEMA_INFRACOES)) |>
-    mutate(
-      num_br_infracao = as.integer(num_br_infracao),
-      num_km_infracao = as.double(num_km_infracao),
-      med_realizada   = as.double(med_realizada),
-      med_considerada = as.double(med_considerada),
-      exc_verificado  = as.double(exc_verificado),
-      qtd_infracoes   = as.integer(qtd_infracoes)
-    )
 
   saida <- path(BASE_CONSOLIDADOS, "infracoes", glue("infracoes_{ano}.parquet"))
   dir_create(path_dir(saida), recurse = TRUE)
-  write_parquet(df, saida)
 
-  res <- list(linhas = nrow(df), tamanho_mb = round(file.size(saida) / 1e6, 2))
+  sink    <- FileOutputStream$create(saida)
+  writer  <- NULL
+  schema  <- NULL
+  linhas  <- 0L
+
+  for (arq in arquivos) {
+    tabela <- Table$create(ler_mes(arq))
+    if (is.null(writer)) {
+      schema <- tabela$schema
+      writer <- ParquetFileWriter$create(schema, sink,
+                                         properties = ParquetWriterProperties$create(names(schema)))
+    }
+    writer$WriteTable(tabela$cast(schema), chunk_size = tabela$num_rows)
+    linhas <- linhas + tabela$num_rows
+    rm(tabela); invisible(gc())
+  }
+  writer$Close()
+  sink$close()
+
+  res <- list(linhas = linhas, tamanho_mb = round(file.size(saida) / 1e6, 2))
   cli_inform("infracoes_{ano}: {res$linhas} linhas, {res$tamanho_mb} MB")
   invisible(res)
 }
 
-atualizar_catalogo <- function() {
+# Atualiza o catalogo de forma incremental: so as entradas dos Parquets
+# informados em `arquivos` (caminhos locais) sao reescritas; as demais mantem
+# seus metadados, inclusive `atualizado_em` -- o pacote usa essa data para
+# decidir se o cache do usuario esta desatualizado.
+# `sha256` e um vetor nomeado (nome do Parquet -> hash do zip de origem).
+# Sem argumentos, reescreve as entradas de todos os Parquets locais.
+atualizar_catalogo <- function(arquivos = NULL, sha256 = character()) {
   datasets <- c("acidentes", "datatran", "infracoes")
+  saida    <- "catalogo.json"
+  hoje     <- as.character(Sys.Date())
 
-  info_datasets <- map(set_names(datasets), function(dataset) {
-    pasta    <- path(BASE_CONSOLIDADOS, dataset)
-    if (!dir_exists(pasta)) return(list(anos = integer(0), arquivos = list()))
+  if (is.null(arquivos)) {
+    arquivos <- dir_ls(BASE_CONSOLIDADOS, recurse = TRUE, glob = "*.parquet")
+  }
 
-    arquivos <- dir_ls(pasta, glob = "*.parquet")
-    if (length(arquivos) == 0) return(list(anos = integer(0), arquivos = list()))
+  catalogo <- if (file_exists(saida)) {
+    read_json(saida, simplifyVector = FALSE)
+  } else {
+    list(datasets = list())
+  }
 
-    anos <- sort(as.integer(str_extract(path_file(arquivos), "\\d{4}")))
+  for (caminho in arquivos) {
+    arq     <- path_file(caminho)
+    dataset <- str_remove(arq, "_\\d{4}\\.parquet$")
+    if (!dataset %in% datasets) cli_abort("Parquet inesperado: {arq}")
 
-    info_arq <- map(set_names(path_file(arquivos)), function(arq) {
-      caminho <- path(pasta, arq)
-      list(
-        url           = paste0(BASE_URL, arq),
-        tamanho_mb    = round(file.size(caminho) / 1e6, 2),
-        linhas        = nrow(open_dataset(caminho)),
-        atualizado_em = as.character(Sys.Date())
-      )
-    })
+    info <- list(
+      url           = paste0(BASE_URL, arq),
+      tamanho_mb    = round(file.size(caminho) / 1e6, 2),
+      linhas        = nrow(open_dataset(caminho)),
+      atualizado_em = hoje
+    )
+    if (!is.na(sha256[arq])) info$origem_sha256 <- unname(sha256[arq])
 
-    list(anos = anos, arquivos = info_arq)
-  })
+    catalogo$datasets[[dataset]]$arquivos[[arq]] <- info
+  }
+
+  for (dataset in datasets) {
+    arqs <- names(catalogo$datasets[[dataset]]$arquivos)
+    arqs <- arqs[order(arqs)]
+    catalogo$datasets[[dataset]]$arquivos <- catalogo$datasets[[dataset]]$arquivos[arqs]
+    catalogo$datasets[[dataset]]$anos <- as.list(as.integer(str_extract(arqs, "\\d{4}")))
+    catalogo$datasets[[dataset]] <- catalogo$datasets[[dataset]][c("anos", "arquivos")]
+  }
 
   catalogo <- list(
-    atualizado_em = as.character(Sys.Date()),
+    atualizado_em = hoje,
     repo          = REPO,
     release_tag   = RELEASE_TAG,
     base_url      = BASE_URL,
-    datasets      = info_datasets
+    datasets      = catalogo$datasets[datasets]
   )
 
-  saida <- "catalogo.json"
   write_json(catalogo, saida, pretty = TRUE, auto_unbox = TRUE)
   cli_inform("Catálogo escrito: {saida}")
   invisible(saida)
 }
 
 consolidar_tudo <- function() {
+  if (!dir_exists(BASE_PROCESSADOS)) {
+    cli_abort("Execute a partir do root do repositorio tidyprf-dados.")
+  }
+
   cli_h1("Acidentes (2007-2026)")
   walk(2007:2026, consolidar_acidentes)
 
@@ -379,5 +418,6 @@ consolidar_tudo <- function() {
   invisible(NULL)
 }
 
-# Executar ao rodar via Rscript
-if (!interactive()) consolidar_tudo()
+# Executar so ao rodar diretamente (Rscript scripts/04_consolidar.R),
+# nao quando carregado via source() por outro script
+if (!interactive() && sys.nframe() == 0L) consolidar_tudo()
