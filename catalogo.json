@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-14",
+  "atualizado_em": "2026-09-21",
   "repo": "bonijoao/tidyprf-dados",
   "release_tag": "dados-v1",
   "base_url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/",
@@ -138,9 +138,10 @@
         },
         "acidentes_2025.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2025.parquet",
-          "tamanho_mb": 12,
+          "tamanho_mb": 12.13,
           "linhas": 584010,
-          "atualizado_em": "2026-05-03"
+          "atualizado_em": "2026-09-21",
+          "origem_sha256": "a69432dcab6d1e848e1fe24299d93f34dc65a98e1ec2ddd86d7f8a0945d4c5e9"
         },
         "acidentes_2026.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2026.parquet",
@@ -285,9 +286,10 @@
         },
         "datatran_2025.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2025.parquet",
-          "tamanho_mb": 3.14,
+          "tamanho_mb": 3.12,
           "linhas": 72529,
-          "atualizado_em": "2026-05-03"
+          "atualizado_em": "2026-09-21",
+          "origem_sha256": "52c8a631ac9d428bf845e2fa996b8c61f66b219f7014a61d292f9d95d186bb0f"
         },
         "datatran_2026.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2026.parquet",
@@ -341,9 +343,10 @@
         },
         "infracoes_2025.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2025.parquet",
-          "tamanho_mb": 297.57,
+          "tamanho_mb": 287.23,
           "linhas": 10204474,
-          "atualizado_em": "2026-05-03"
+          "atualizado_em": "2026-09-21",
+          "origem_sha256": "5422236ff1555c92e7538fd3b58bf05612d753c90a55f12171c7f8a63f08de5b"
         },
         "infracoes_2026.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/infracoes_2026.parquet",
