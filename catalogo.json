@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-11-02",
+  "atualizado_em": "2026-11-23",
   "repo": "bonijoao/tidyprf-dados",
   "release_tag": "dados-v1",
   "base_url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/",
@@ -145,10 +145,10 @@
         },
         "acidentes_2026.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/acidentes_2026.parquet",
-          "tamanho_mb": 9.45,
-          "linhas": 457622,
-          "atualizado_em": "2026-11-02",
-          "origem_sha256": "579357cadf81589dc2b851410b8bb0e7ab38f2aac34c812af39e2fa3a601ec5a"
+          "tamanho_mb": 10.44,
+          "linhas": 509188,
+          "atualizado_em": "2026-11-23",
+          "origem_sha256": "cb175bbf57051bdb9c8b5465a4d0edc598b833011120b563eebeab037de1410e"
         }
       }
     },
@@ -293,10 +293,10 @@
         },
         "datatran_2026.parquet": {
           "url": "https://github.com/bonijoao/tidyprf-dados/releases/download/dados-v1/datatran_2026.parquet",
-          "tamanho_mb": 2.41,
-          "linhas": 54895,
-          "atualizado_em": "2026-11-02",
-          "origem_sha256": "d77d3db24602bb2a70131082eff5b7806c6ce21602880acb2d7f7790e5defccb"
+          "tamanho_mb": 2.68,
+          "linhas": 61212,
+          "atualizado_em": "2026-11-23",
+          "origem_sha256": "1809ee0f19b4a9de48cd0cebb4ed39eda89b26133382c3e93df4aa76b725ebd1"
         }
       }
     },
